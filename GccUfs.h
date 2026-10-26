@@ -60,6 +60,15 @@ static const UfsHardware kSm7325Ufs = {
   0, true
 };
 
+// SM8150 (d2xq / Note10+ 5G): UFSHC 0x1d84000, apps_smmu 0x15000000 with UFS
+// stream ID 0x300, ICE at 0x1d90000. Clock offsets from gcc-sm8150.c; the UFS
+// PHY GDSC is shared at GCC + 0x77004 (no separate memory-PHY GDSC).
+static const UfsHardware kSm8150Ufs = {
+  UFS_HC_BASE, UFS_HC_SIZE, 0x15000000ULL, 0x100000, 0x300,
+  0x77010, 0x77014, 0x77058, 0x77018, 0x7701c, 0x77090,
+  0, false
+};
+
 // gcc_ufs_phy_ahb_clk and gcc_aggre_ufs_phy_axi_clk set hwcg_bit=1 in gcc-sm8550.c, so CLK_OFF=1 on
 // an idle branch is normal (hardware 2026-10-17 read ahb=80000003).
 // The reset and RPMh/TCSR/QMP-PHY programming are not represented here: their

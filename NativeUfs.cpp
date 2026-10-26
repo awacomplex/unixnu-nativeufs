@@ -165,6 +165,11 @@ static bool selectHardware (void)
     ufs->release ();
     return true;
   }
+  if (compatibleWith (ufs, "qcom,sm8150-ufshc")) {
+    gHardware = kSm8150Ufs;
+    ufs->release ();
+    return true;
+  }
   if (!compatibleWith (ufs, "qcom,sm7325-ufshc")) {
     IOLog ("NativeUfs: unsupported controller compatible string\n");
     ufs->release ();
@@ -217,6 +222,7 @@ IOService *NativeUfs::probe (IOService *provider, SInt32 *score)
     return this;
   }
   bool match = compatibleWith (provider, "qcom,sm8550-ufshc") ||
+    compatibleWith (provider, "qcom,sm8150-ufshc") ||
     compatibleWith (provider, "qcom,sm7325-ufshc");
   if (!match) {
     return nullptr;
